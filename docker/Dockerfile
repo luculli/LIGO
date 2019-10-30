@@ -5,7 +5,7 @@
 
 # base image
 FROM debian:8
-LABEL maintainer="seagull"
+LABEL maintainer="Gabriele LUCULLI"
 
 # install linux packages 
 RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y  update \
