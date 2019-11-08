@@ -7,3 +7,5 @@ sklearn
 gsl
 pyfftw
 h5py
+cython 
+corner

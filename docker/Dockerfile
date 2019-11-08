@@ -1,6 +1,6 @@
 ## ----------------------------------------------------------------------
 ## Dockerfile for LAL environment (Giulia)
-## v. 0.1 - 20191029 G. Luculli
+## v. 0.2 - 20191108 G. Luculli
 ## ----------------------------------------------------------------------
 
 # base image
@@ -40,6 +40,11 @@ RUN rm ./requirements.txt
 
 # install lal for python
 RUN sudo pip install lalsuite
+
+# install cpnest and its dependencies
+RUN export DEBIAN_FRONTEND=noninteractive; apt-get install -y python-pyrex pyrex-mode
+RUN sudo pip install pyrex cpnest
+
 
 # working dir, env and user
 RUN mkdir -p /home/user/src
