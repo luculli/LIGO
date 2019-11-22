@@ -1,4 +1,4 @@
-# Dockerfile for LIGO Environment - v0.2
+# Dockerfile for LIGO Environment - v0.3
 This folder contains a Dockerfile to setup the standard LIGO environment (i.e. LALSuite) following the description reported in https://wiki.ligo.org/Computing/LALSuiteInstall for Debian platform.
 
 In order to setup the LAL Suite in your computer you have to:
