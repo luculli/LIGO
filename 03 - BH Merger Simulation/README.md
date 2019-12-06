@@ -1,4 +1,4 @@
-# Dockerfile for BH Merger SImulation - v0.1
+# Dockerfile for BH Merger Simulation - v0.1
 A simple simulator of the merging of BH is implemented in Python. The main idea is that the initial spatial distribution
 of BH and a limited range effect of their interaction could be sufficient to establish the main characteristics of the BHDF
 (i.e. gaps existence, etc). The merging would essentially be a topological effect in that case.

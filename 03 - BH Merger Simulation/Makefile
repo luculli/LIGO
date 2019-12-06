@@ -1,4 +1,4 @@
-## -- LAL case
+## -- BH Merging Simulation
 ## -------------------------------
 IMAGE_NAME:=seagull/ligo-life
 CONTAINER_NAME:=ligo-life
