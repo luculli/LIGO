@@ -11,7 +11,7 @@ import matplotlib.animation as animation
 import math
 
 def randomGrid(N, mass, mass_prob):
-    """returns a grid of NxN random values"""
+    """returns a grid of NxN random values of mass_prob"""
     return np.random.choice(mass, N * N, p=mass_prob).reshape(N, N)
 
 class Anim():
@@ -25,14 +25,40 @@ class Anim():
         self.ctr = 0
 
     def run(self, fig, img0, img1, img2, dmax):
-        self.ani = animation.FuncAnimation(fig, self.update, fargs=(img0, img1, img2, self.grid, self. N, dmax),
+        self.ani = animation.FuncAnimation(fig, self.__run_animation, fargs=(img0, img1, img2, self.grid, self. N, dmax),
                                     frames=100,
                                     interval=self.updateInterval,
                                     save_count=50)
+
+    def __run_animation(self, frameNum, img_grid, img_cdf, img_h, grid, N, dmax):
+        total_mergers = 0
+
+        # 1 discrete time step update
+        grid, total_mergers = self.update(total_mergers, grid, N, dmax)
+
+        # compute mass distribution
+        H,X = np.histogram(grid[grid.nonzero()])
+        delta = X[1] - X[0]
+        CDF = np.cumsum(H)*delta
+
+        # update plots
+        img_grid.set_data(grid)
+        img_cdf.plot(X[1:], CDF)
+        img_h.hist(grid[grid.nonzero()])
+
+        # info text output
+        print("Run #" + str(self.ctr) +  " completed");
+
+        # stop
+        if total_mergers == 0:
+            self.__print_final_state(grid)
+            self.ani.event_source.stop()
+
+        return grid
+
     
     # update grid after 1 run
-    def update(self, frameNum, img_grid, img_cdf, img_h, grid, N, dmax):
-        total_mergers = 0
+    def update(self, total_mergers, grid, N, dmax):
         self.ctr = self.ctr + 1
 
         for i in range(N):
@@ -103,35 +129,17 @@ class Anim():
                                     stop = True
                                     break               
 
-        # compute mass distribution
-        H,X = np.histogram(grid[grid.nonzero()])
-        delta = X[1] - X[0]
-        CDF = np.cumsum(H)*delta
+        return grid, total_mergers
 
-        # update plots
-        img_grid.set_data(grid)
-        img_cdf.plot(X[1:], CDF)
-        img_h.hist(grid[grid.nonzero()])
+    def __print_final_state(self, gr):
+        print("\n** Simulation completed!")
+        H,X = np.histogram(gr[gr.nonzero()])
 
-        # info text output
-        print("Run #" + str(self.ctr) +  " completed");
-
-        # stop
-        if total_mergers == 0:
-            print_final_state(grid)
-            self.ani.event_source.stop()
-
-        return grid
-
-def print_final_state(gr):
-    print("\n** Simulation completed!")
-    H,X = np.histogram(gr[gr.nonzero()])
-
-    i=0
-    for k in range(len(H)):
-        if H[k] !=0:
-            i = i + 1
-            print("Set BH #"+str(i)+" : "+str(H[k])+" times the mass range ("+str(math.trunc(X[k]))+"-"+str(math.trunc(X[k+1]))+")")
+        i=0
+        for k in range(len(H)):
+            if H[k] !=0:
+                i = i + 1
+                print("Set BH #"+str(i)+" : "+str(H[k])+" times the mass range ("+str(math.trunc(X[k]))+"-"+str(math.trunc(X[k+1]))+")")
 
 
 
