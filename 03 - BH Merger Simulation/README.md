@@ -1,4 +1,4 @@
-# Dockerfile for BH Merger Simulation - v0.3
+# BHs Merging Simulation - v0.3
 A simple simulator of the merging of BH is implemented in Python. The main idea is that the initial spatial distribution
 of BH and a limited range effect of their interaction could be sufficient to establish the characteristics of the final BHDF
 (i.e. mass gaps, mass density funciton, etc). The merging would essentially be a topological effect in that case.
@@ -26,10 +26,10 @@ Parameters of the simulator:
 Examples of runs:
 
 * python bh-life-v2.py
-* python bh-life-v2.py --max-dist 10 --grid-size 200
+* python bh-life-v2.py --max-dist 10 --grid-size 200 [Figure 1](./doc/Figure_1_md_10_gs_200.png?raw=true)
 * python bh-life-v2.py --max-dist 10 --run-type 2
-* python bh-life-v2.py --max-dist 5 --uniform-mass-max 5000
+* python bh-life-v2.py --max-dist 5 --uniform-mass-max 5000 [Figure 3](./doc/Figure_2_md_5_umassd_5000.png?raw=true)
 * python bh-life-v2.py --max-dist 5 --uniform-mass-max 5000 --run-type 2
 
-![Figure 1](./doc/Figure_1_md_10_gs_200.png?raw=true "Figure 1")
-![Figure 2](./doc/Figure_2_md_5_umassd_5000.png?raw=true "Figure 2")
+
+
