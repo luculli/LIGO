@@ -31,5 +31,5 @@ Examples of runs:
 * python bh-life-v2.py --max-dist 5 --uniform-mass-max 5000
 * python bh-life-v2.py --max-dist 5 --uniform-mass-max 5000 --run-type 2
 
-[!Figure 1](./doc/Figure_1_md_10_gs_200.png?raw=true "Figure 1")
-[!Figure 2](./doc/Figure_2_md_5_umassd_5000.png?raw=true "Figure 2")
+![Figure 1](./doc/Figure_1_md_10_gs_200.png?raw=true "Figure 1")
+![Figure 2](./doc/Figure_2_md_5_umassd_5000.png?raw=true "Figure 2")
