@@ -252,6 +252,7 @@ def main():
     parser.add_argument('--max-dist', dest='dmax', required=False)
     parser.add_argument('--run-type', dest='run_type', required=False)
     parser.add_argument('--zero-mass-density', dest='zero_mass_density', required=False)
+    parser.add_argument('--uniform-mass-max', dest='umassd', required=False)
     parser.add_argument('--mov-file', dest='movfile', required=False)
     parser.add_argument('--interval', dest='interval', required=False)
    
@@ -277,18 +278,22 @@ def main():
     if args.zero_mass_density:
         mass_prob_zero = float(args.zero_mass_density)
 
+    # set maximum value for uniform distribution of masses
+    umassd = 20
+    if args.umassd:
+        umassd = int(args.umassd)
+
     # set output video file
     movfile = ""
     if args.movfile:
         movfile = args.movfile
 
     # set animation update interval
-    updateInterval = 0
+    updateInterval = 50
     if args.interval:
         updateInterval = int(args.interval)
 
     # setting up the values of BH masses for the grid
-    umassd = 20  
     mass = range(umassd)
     mass_prob = [(1 - mass_prob_zero)/(len(mass) - 1) for i in mass]  # uniform mass distribution in 1:umassd
     mass_prob[0] = mass_prob_zero

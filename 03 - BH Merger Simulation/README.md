@@ -19,12 +19,17 @@ Parameters of the simulator:
 * --grid-size : this is the value of N (default value 100)
 * --max-dist  : this is the maxiaml distance between two BH to have a merger (default value 5)
 * --zero-mass-density : this is the percentage of the NxN grid which is not filled by any BHs (default value 0.90)
-* --run-type : this parameter can have two possible values, 1 and 2. When it is 1, the simulator generate a single grid of BHs and it computes its evolution, the output is the a signle realization of the final mass distribution. Instead, when the type is equal to 2, a set of 1000 grids are generated in parallel and the output is the global statitic of mass distribution (default value 1)
+* --uniform-mass-max  : the mass of BH are uniformely sampled in the range [1, <value>] (default value of 20)
+* --run-type : this parameter can have two possible values, 1 and 2. When it is 1, the simulator generates a single grid of BHs and it computes its evolution, the output is the a single realization of the final mass distribution. Instead, when the type is equal to 2, a set of 1000 grids are generated in parallel and the output is the global statistic of mass distribution (default value 1)
 
  
 Examples of runs:
 
 * python bh-life-v2.py
 * python bh-life-v2.py --max-dist 10 --grid-size 200
-* python bh-life-v2.py --run-type 2 --max-dist 10
+* python bh-life-v2.py --max-dist 10 --run-type 2
+* python bh-life-v2.py --max-dist 5 --uniform-mass-max 5000
+* python bh-life-v2.py --max-dist 5 --uniform-mass-max 5000 --run-type 2
 
+[!Figure 1](./doc/Figure_1_md_10_gs_200.png?raw=true "Figure 1")
+[!Figure 2](./doc/Figure_2_md_5_umassd_5000.png?raw=true "Figure 2")
