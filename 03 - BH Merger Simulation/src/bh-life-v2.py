@@ -36,11 +36,10 @@ def randomGrid(N, mass, mass_prob):
     return dat
 
 class BH_Merger_Model():
-    def __init__(self, mass, mass_prob, updateInterval, N, alpha, **kw):
+    def __init__(self, mass, mass_prob, N, alpha, **kw):
         # save params
         self.mass = mass
         self.mass_prob = mass_prob
-        self.updateInterval = updateInterval
         self.N = N
         self.alpha = alpha
 
@@ -71,23 +70,40 @@ class BH_Merger_Model():
 
         # plot benchmakr histogram
         plt.hist(tot_grid, bins=200, normed=True)
+        plt.grid()
+        plt.xlabel('Mass')
+        plt.ylabel('Frequency')
+        plt.title('Global Mass Density (1000 grids)')
+
         H,X = np.histogram(tot_grid)
         plt.show()
 
     def run(self, dmax, save_to_file=""):
         # set up animation
-        fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(12,6))
-        img0 = ax[0].imshow(self.grid, interpolation='nearest')
-        img1 = ax[1]
-        img2 = ax[2]
+        fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(18,5))
 
+        # spatial distribution of BHs
+        img0 = ax[0].imshow(self.grid, interpolation='nearest')
+        ax[0].set_title('BHs Grid')
+
+        # Mass CUmulative Distribution per Iteration
+        img1 = ax[1]
         img1.grid()
+        img1.set_xlabel('Mass')
+        img1.set_ylabel('Counter')
+        img1.set_title('Mass Cum. Distribution by Iteration')
+
+        # Mass Histogram per Iteration
+        img2 = ax[2]
+        img2.grid()
+        img2.set_xlabel('Mass')
+        img2.set_ylabel('Counter')
+        img2.set_title('Mass Histogram by Iteration')
 
         # execution
         self.ani = animation.FuncAnimation(fig, self.__run_animation, fargs=(img0, img1, img2, self.grid, self.N, dmax),
                                     frames=100,
-                                    interval=self.updateInterval,
-                                    save_count=50)
+                                    save_count=10)
 
         if save_to_file != "":
              self.ani.save(save_to_file, fps=30, extra_args=['-vcodec', 'libx264'])
@@ -254,7 +270,6 @@ def main():
     parser.add_argument('--zero-mass-density', dest='zero_mass_density', required=False)
     parser.add_argument('--uniform-mass-max', dest='umassd', required=False)
     parser.add_argument('--mov-file', dest='movfile', required=False)
-    parser.add_argument('--interval', dest='interval', required=False)
    
     args = parser.parse_args()
 
@@ -288,11 +303,6 @@ def main():
     if args.movfile:
         movfile = args.movfile
 
-    # set animation update interval
-    updateInterval = 50
-    if args.interval:
-        updateInterval = int(args.interval)
-
     # setting up the values of BH masses for the grid
     mass = range(umassd)
     mass_prob = [(1 - mass_prob_zero)/(len(mass) - 1) for i in mass]  # uniform mass distribution in 1:umassd
@@ -306,13 +316,13 @@ def main():
 
     if run_type == 1:
         # single run in animation mode
-        model = BH_Merger_Model(mass, mass_prob, updateInterval, N, alpha)
+        model = BH_Merger_Model(mass, mass_prob, N, alpha)
         final_grid = model.run(dmax, save_to_file=movfile)
 
         plt.show()
     else:
         # compute global stats by MC
-        model = BH_Merger_Model(mass, mass_prob, updateInterval, N, alpha)
+        model = BH_Merger_Model(mass, mass_prob, N, alpha)
         model.run_stats(dmax)
 
 
